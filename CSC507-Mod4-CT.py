@@ -1,43 +1,32 @@
-# Python3 implementation of First-Fit algorithm 
+# CSC507 Operating Systems Module 4 Cirtical Thinking
+# Simulate the First-Fit Algorithm in Allocating Memory to Processes
 
-# Function to allocate memory to 
-# blocks as per First fit algorithm 
+# Function to allocate memory to processes using first fit algorithm
 def firstFit(blockSize, m, processSize, n):
-    
-    # Stores block id of the 
-    # block allocated to a process 
     allocation = [-1] * n 
 
-    # Initially no block is assigned to any process
-
-    # pick each process and find suitable blocks 
-    # according to its size ad assign to it 
+    # pick each process and find suitable blocks
     for i in range(n):
         for j in range(m):
             if blockSize[j] >= processSize[i]:
-                
-                # allocate block j to p[i] process 
-                allocation[i] = j 
-
-                # Reduce available memory in this block. 
+                allocation[i] = j  
                 blockSize[j] -= processSize[i] 
-
                 break
 
-    print(" Process No. Process Size      Block no.")
+    print(f"{'Process No.':<12}{'Process Size':<15}{'Block No.'}")
+    print("-" * 40)
     for i in range(n):
-        print(" ", i + 1, "         ", processSize[i], 
-                          "         ", end = " ") 
-        if allocation[i] != -1: 
-            print(allocation[i] + 1) 
-        else:
-            print("Not Allocated")
+        block_no = allocation[i] + 1 if allocation[i] != -1 else "Not Allocated"
+        print(f"{i+1:<12}{processSize[i]:<15}{block_no}")
 
-# Driver code 
+
 if __name__ == '__main__': 
-    blockSize = [100, 500, 200, 300, 600] 
-    processSize = [212, 417, 112, 426]
+    blockSize = [100, 500, 250, 325, 600] 
+    processSize = [125, 417, 250, 575, 500] #212, 417, 112, 426
+    
+    # Number of blocks
     m = len(blockSize)
+    # Number of processes
     n = len(processSize)
 
     firstFit(blockSize, m, processSize, n)
